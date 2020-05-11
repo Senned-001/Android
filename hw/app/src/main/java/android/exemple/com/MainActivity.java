@@ -1,57 +1,86 @@
 package android.exemple.com;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+/**
+ * Counter for Basketball Games
+ */
+
 public class MainActivity extends AppCompatActivity {
+    public int scoreTeamA = 0;
+    public int scoreTeamB = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().hide();
     }
 
-    /**
-     * This method is called when the order button is clicked.
-     */
-    public void submitOrder(View view) {
-        Intent intent = new Intent(this, Display2Activity.class);
-        TextView quantityTextView = (TextView) findViewById(R.id.quantity_text_view);
-        String number = quantityTextView.getText().toString();
-        intent.putExtra("NUMBER", number);
-
-        TextView priceTextView = (TextView) findViewById(R.id.price_text_view);
-        String price = priceTextView.getText().toString();
-        intent.putExtra("PRICE", price);
-
-        startActivity(intent);
-    }
-
-    /**
-     * This method displays the given quantity value on the screen.
-     */
     public void changeQuantity (View view) {
-        TextView quantityTextView = (TextView) findViewById(R.id.quantity_text_view);
-        int value = Integer.parseInt(quantityTextView.getText().toString());
+        if(view.getParent().equals(findViewById(R.id.TeamA))){
+            if(view.equals(findViewById(R.id.buttonPlusThreeA))) {
+                    scoreTeamA += 3;
+                }
+            if(view.equals(findViewById(R.id.buttonPlusTwoA))) {
+                    scoreTeamA += 2;
+                }
+            if(view.equals(findViewById(R.id.buttonPlusOneA))) {
+                    scoreTeamA ++;
+                }
+        }
 
-        if(view.equals(findViewById(R.id.button_max_quantity))){
-            value++;
-            quantityTextView.setText("" + value);
+        if(view.getParent().equals(findViewById(R.id.TeamB))){
+            if(view.equals(findViewById(R.id.buttonPlusThreeB))) {
+                scoreTeamB += 3;
+            }
+            if(view.equals(findViewById(R.id.buttonPlusTwoB))) {
+                scoreTeamB += 2;
+            }
+            if(view.equals(findViewById(R.id.buttonPlusOneB))) {
+                scoreTeamB ++;
+            }
         }
-        if(view.equals(findViewById(R.id.button_min_quantity))&&value > 0){
-            value--;
-            quantityTextView.setText("" + value);
-        }
-        changePrice(value);
+        displayScore();
     }
 
-    public void changePrice (int number){
-        TextView priceTextView = (TextView) findViewById(R.id.price_text_view);
-        priceTextView.setText("" + number*5);
+    public void Reset(View view){
+        scoreTeamA = 0;
+        scoreTeamB = 0;
+        EditText scoreTextViewA = (EditText) findViewById(R.id.name_teamA);
+        scoreTextViewA.setText("Team A");
+        EditText scoreTextViewB = (EditText) findViewById(R.id.name_teamB);
+        scoreTextViewB.setText("Team B");
+        displayScore();
+    }
+
+    private void displayScore (){
+        TextView scoreTextViewA = (TextView) findViewById(R.id.scoreTeamA);
+        TextView scoreTextViewB = (TextView) findViewById(R.id.scoreTeamB);
+        scoreTextViewA.setText("" + scoreTeamA);
+        scoreTextViewB.setText("" + scoreTeamB);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("scoreTeamA", scoreTeamA);
+        outState.putInt("scoreTeamB", scoreTeamB);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        scoreTeamA = savedInstanceState.getInt("scoreTeamA");
+        scoreTeamB = savedInstanceState.getInt("scoreTeamB");
+        displayScore();
     }
 }

@@ -4,90 +4,169 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/pic1"/>
+        android:src="@drawable/fon"/>
 
-    <TextView
-        android:id="@+id/textQuantity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif"
-        android:padding="8dp"
-        android:text="QUANTITY"
-        android:textColor="#fff"
-        android:textSize="32sp"
-        android:textStyle="bold" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/TeamA"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/name_teamA"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="sans-serif"
+                android:padding="8dp"
+                android:text="Team A"
+                android:textColor="#fff"
+                android:textSize="32sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/scoreTeamA"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="sans-serif"
+                android:shadowColor="@color/colorPrimaryDark"
+                android:text="0"
+                android:textColor="#fff"
+                android:textSize="110sp"
+                android:textStyle="bold"/>
+
+            <Button
+                android:id="@+id/buttonPlusThreeA"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="10dp"
+                android:onClick="changeQuantity"
+                android:padding="20dp"
+                android:shadowColor="@color/colorPrimaryDark"
+                android:text="+3 points"
+                android:textStyle="bold"/>
+
+            <Button
+                android:id="@+id/buttonPlusTwoA"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="10dp"
+                android:onClick="changeQuantity"
+                android:padding="20dp"
+                android:shadowColor="@color/colorPrimaryDark"
+                android:text="+2 points"
+                android:textStyle="bold"/>
+
+            <Button
+                android:id="@+id/buttonPlusOneA"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="10dp"
+                android:onClick="changeQuantity"
+                android:padding="20dp"
+                android:shadowColor="@color/colorPrimaryDark"
+                android:text="+1 points"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/TeamB"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/name_teamB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="sans-serif"
+                android:padding="8dp"
+                android:text="Team B"
+                android:textColor="#fff"
+                android:textSize="32sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/scoreTeamB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="sans-serif"
+                android:shadowColor="@color/colorPrimaryDark"
+                android:text="0"
+                android:textColor="#fff"
+                android:textSize="110sp"
+                android:textStyle="bold"/>
+
+            <Button
+                android:id="@+id/buttonPlusThreeB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="10dp"
+                android:onClick="changeQuantity"
+                android:padding="20dp"
+                android:shadowColor="@color/colorPrimaryDark"
+                android:text="+3 points"
+                android:textStyle="bold"/>
+
+            <Button
+                android:id="@+id/buttonPlusTwoB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="10dp"
+                android:onClick="changeQuantity"
+                android:padding="20dp"
+                android:shadowColor="@color/colorPrimaryDark"
+                android:text="+2 points"
+                android:textStyle="bold"/>
+
+            <Button
+                android:id="@+id/buttonPlusOneB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="10dp"
+                android:onClick="changeQuantity"
+                android:padding="20dp"
+                android:shadowColor="@color/colorPrimaryDark"
+                android:text="+1 points"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
     <Button
-        android:id="@+id/button_min_quantity"
-        android:text="-"
-        android:layout_width="40dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textQuantity"
-        android:layout_marginTop="8dp"
-        android:layout_marginLeft="8dp"
-        android:shadowColor="@color/colorPrimaryDark"
-        android:onClick="changeQuantity"/>
-
-    <TextView
-        android:id="@+id/quantity_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:text="0"
-        android:layout_below="@id/textQuantity"
-        android:layout_toRightOf="@id/button_min_quantity"
-        android:textColor="#000"
-        android:textSize="32sp"
-        android:textStyle="bold" />
-
-    <Button
-        android:id="@+id/button_max_quantity"
-        android:text="+"
-        android:layout_width="40dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textQuantity"
-        android:layout_toRightOf="@id/quantity_text_view"
-        android:layout_marginTop="8dp"
-        android:shadowColor="@color/colorPrimaryDark"
-        android:onClick="changeQuantity"/>
-
-    <TextView
-        android:id="@+id/textPrice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif"
-        android:padding="8dp"
-        android:text="PRICE"
-        android:layout_below="@id/quantity_text_view"
-        android:textColor="#fff"
-        android:textSize="32sp"
-        android:textStyle="bold" />
-
-    <EditText
-        android:id="@+id/price_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:text="0"
-        android:layout_below="@id/textPrice"
-        android:textColor="#000"
-        android:textSize="32sp"
-        android:textStyle="bold" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:layout_below="@id/price_text_view"
-        android:shadowColor="@color/colorPrimaryDark"
-        android:text="Whisper"
-        android:onClick="submitOrder"/>
-
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="100dp"
+        android:onClick="Reset"
+        android:padding="20dp"
+        android:text="Reset"
+        android:textStyle="bold"/>
 
 </RelativeLayout>
