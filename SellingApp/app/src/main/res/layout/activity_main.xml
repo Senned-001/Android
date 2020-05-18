@@ -7,10 +7,55 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <ImageView
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_margin="8dp"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_margin="8dp"
+            android:layout_weight="1"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Name"
+                android:textSize="24sp"
+                android:padding="8dp"
+                android:layout_weight="1"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PRICE:"
+                    android:textSize="24sp"
+                    android:padding="8dp" />
+
+                <TextView
+                    android:id="@+id/price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0 $"
+                    android:textSize="24sp"
+                    android:padding="8dp"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -42,6 +87,7 @@
                     android:layout_height="wrap_content"
                     android:text="-"
                     android:textSize="20sp"
+                    android:shadowColor="#000"
                     android:onClick="changeQuantity"/>
                 <TextView
                     android:id="@+id/textQuantity"
@@ -57,6 +103,7 @@
                     android:layout_height="wrap_content"
                     android:text="+"
                     android:textSize="20sp"
+                    android:shadowColor="#000"
                     android:onClick="changeQuantity"/>
             </LinearLayout>
         </LinearLayout>
@@ -134,12 +181,67 @@
             android:layout_weight="1"
             android:onClick="onCheckboxClicked"/>
     </LinearLayout>
-    <TextView
-        android:layout_width="wrap_content"
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TOTAL"
-        android:textSize="24sp"
-        android:padding="8dp"/>
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TOTAL:"
+            android:textSize="24sp"
+            android:padding="8dp"/>
+
+        <TextView
+            android:id="@+id/totalSum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0$"
+            android:textSize="24sp"
+            android:padding="8dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="YOUR NAME:"
+            android:textSize="24sp"
+            android:padding="8dp"/>
+
+        <EditText
+            android:id="@+id/userName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Please, enter your name"
+            android:layout_marginLeft="12dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="YOUR PHONE:"
+            android:textSize="24sp"
+            android:padding="8dp"/>
+
+        <EditText
+            android:id="@+id/userPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Please, enter your phone"/>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/totalText"
@@ -149,19 +251,11 @@
         android:textSize="12sp"
         android:padding="8dp"/>
 
-    <TextView
-        android:id="@+id/totalSum"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="0$"
-        android:textSize="24sp"
-        android:padding="8dp"/>
-
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="ORDER"
         android:textSize="20sp"
-        android:layout_marginLeft="8dp"
+        android:layout_gravity="center_horizontal"
         android:shadowColor="#000"/>
 </LinearLayout>

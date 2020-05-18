@@ -3,21 +3,28 @@ package android.exemple.sellingapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     private int quantity = 1;
+    private int totalSum = 0;
+    private String color = "";
+    private String userName = "";
+    private String userPhone = "";
+    private String orderInfo = "";
+    private boolean bonus1IsChecked = false;
+    private boolean bonus2IsChecked = false;
+    private String resultOfOrder = "Success Order, our manager will contact to you";
+
     private int price = 20;
     private int bonus1 = 5;
     private int bonus2 = 10;
-    private int totalSum = 0;
-    private String color = "";
-
-    private boolean bonus1IsChecked = false;
-    private boolean bonus2IsChecked = false;
     private String name = "Product1";
     private String[] colors = {"Red", "White", "Black"};
     private String checkBox1Name = "bonus (5$)";
@@ -27,8 +34,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initialize();
+    }
+
+    private void initialize(){
+        TextView nameText = (TextView) findViewById(R.id.name);
+        nameText.setText(name);
+        TextView priceText = (TextView) findViewById(R.id.price);
+        priceText.setText(price + " $");
         initRadioButtons();
         initCheckBoxes();
+        setListenersOnEdits();
         displayQuantity();
         displayTotalText();
         displayTotalSum();
@@ -36,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void changeQuantity(View view){
         if(view.getId() == R.id.minusButton){
-            if(quantity>0)
+            if(quantity>1)
                 quantity--;
             else return;
         }
@@ -86,13 +102,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void displayTotalText(){
         TextView totalText = (TextView) findViewById(R.id.totalText);
-        String text = name + " - " + quantity + " p." + "\n" +
-                color + "\n";
+        String text = "Your order: " + name + " - " + quantity + " p." + ", " + color;
         if(bonus1IsChecked)
-            text+= checkBox1Name +"\n";
+            text+= ", " + checkBox1Name;
         if(bonus2IsChecked)
-            text+= checkBox2Name +"\n";
+            text+= ", " + checkBox2Name;
+        text+= "\nYour info: " + userName + ", " + userPhone;
         totalText.setText(text);
+        orderInfo = text.replaceAll("Your", "User");
     }
 
     private void displayTotalSum(){
@@ -103,6 +120,29 @@ public class MainActivity extends AppCompatActivity {
             totalSum+=bonus2;
         TextView totalSumText = (TextView) findViewById(R.id.totalSum);
         totalSumText.setText(totalSum +" $");
+    }
+
+    public void orderClick(View view){
+        final ClientConnection newClientConnection = new ClientConnection();
+        /* Open new connection in new thread */
+        Thread connectionTread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    newClientConnection.openConnection();
+                    newClientConnection.sendData(orderInfo.getBytes());
+                    newClientConnection.closeConnection();
+                } catch (Exception e) {
+                    resultOfOrder = "Error: please check your internet connection";
+                }
+            }
+        });
+        connectionTread.start();
+        displayResultOfOrder();
+    }
+
+    private void displayResultOfOrder(){
+
     }
 
     private void initRadioButtons(){
@@ -127,5 +167,41 @@ public class MainActivity extends AppCompatActivity {
         CheckBox checkBox2 = findViewById(R.id.checkbox2);
         checkBox1.setText(checkBox1Name);
         checkBox2.setText(checkBox2Name);
+    }
+
+    private void setListenersOnEdits(){
+        EditText userNameText = (EditText) findViewById(R.id.userName);
+        userNameText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                userName = s.toString();
+                displayTotalText();
+            }
+        });
+
+        EditText userNamePhone = (EditText) findViewById(R.id.userPhone);
+        userNamePhone.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                userPhone = s.toString();
+                displayTotalText();
+            }
+        });
     }
 }
