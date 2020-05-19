@@ -7,7 +7,7 @@ import java.net.Socket;
 
 public class ClientConnection {
     private static final String LOG_TAG = "ClientConnection";
-    private String mServerName = "192.168.0.10";
+    private String mServerName = "192.168.1.11";
     private int mServerPort = 6789;
     private Socket mSocket = null;
 

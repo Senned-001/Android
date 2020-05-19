@@ -257,5 +257,6 @@
         android:text="ORDER"
         android:textSize="20sp"
         android:layout_gravity="center_horizontal"
-        android:shadowColor="#000"/>
+        android:shadowColor="#000"
+        android:onClick="orderClick"/>
 </LinearLayout>
