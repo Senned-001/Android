@@ -10,6 +10,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     private int quantity = 1;
@@ -133,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
                     newClientConnection.sendData(orderInfo.getBytes());
                     newClientConnection.closeConnection();
                 } catch (Exception e) {
-                    resultOfOrder = "Error: please check your internet connection";
+                    resultOfOrder = "Error: please check your internet connection and try again";
                 }
             }
         });
@@ -142,7 +143,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void displayResultOfOrder(){
-
+        Toast toast = new Toast(this);
+        toast.setText("DONE");
+        toast.setDuration(Toast.LENGTH_LONG);
     }
 
     private void initRadioButtons(){
