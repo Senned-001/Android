@@ -8,8 +8,6 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.text.Text;
 
-
-
 public class Main extends Application{
     private static Text status = new Text("No Connection");
     private static TextArea textArea = new TextArea("WAITING INCOMING MESSAGES");
@@ -20,7 +18,7 @@ public class Main extends Application{
         Thread threadServer = new Thread(server);
         threadServer.start();
 
-        launch();
+        Application.launch();
     }
 
     @Override

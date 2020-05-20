@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">SellingApp</string>
+    <!--Text data, format:
+        name:info:number of options:options#1:cost with options#1:options#2(if exist):cost with options#2(if exist):
+        options#3(if exist):cost with options#3(if exist):name of additional bonus#1:cost of bonus#1:
+        name of additional bonus#2:cost of bonus#2
+        Split by ":".
+     -->
+    <string name="str0">Pizza:Meat, oliva, cheese, peper:3:diameter-30cm:diameter-50cm:diameter-80cm:8:11:15:more cheese:3:spice sauce:2</string>
 </resources>
