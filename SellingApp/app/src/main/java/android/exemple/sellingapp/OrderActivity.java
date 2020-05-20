@@ -44,11 +44,20 @@ public class OrderActivity extends AppCompatActivity {
 
     private void initGlobalValues(String productID){
         /*
-        Load resources as string by name, using id from MainActivity
-        name:info:number of options:options#1:options#2(if exist):options#3(if exist):
-        cost with options#1:cost with options#2(if exist):cost with options#3(if exist):
-        name of additional bonus#1:cost of bonus#1:
-        name of additional bonus#2:cost of bonus#2
+        Load resources as string by name, using id from MainActivity with format:
+        name:
+        info:
+        number of options:
+        options#1:
+        options#2(if exist):
+        options#3(if exist):
+        cost with options#1:
+        cost with options#2(if exist):
+        cost with options#3(if exist):
+        name of additional bonus#1:
+        cost of bonus#1:
+        name of additional bonus#2:
+        cost of bonus#2
         */
 
         int dataID = getResources().getIdentifier(productID, "string", "android.exemple.sellingapp");
