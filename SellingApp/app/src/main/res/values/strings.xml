@@ -1,10 +1,26 @@
 <resources>
     <string name="app_name">SellingApp</string>
-    <!--Text data, format:
-        name:info:number of options:options#1:cost with options#1:options#2(if exist):cost with options#2(if exist):
-        options#3(if exist):cost with options#3(if exist):name of additional bonus#1:cost of bonus#1:
-        name of additional bonus#2:cost of bonus#2
+    <!--All text data, it is important to follow next format:
+        name:
+        info:
+        number of options:
+        options#1:
+        cost with options#1:
+        options#2(if exist):
+        cost with options#2(if exist):
+        options#3(if exist):
+        cost with options#3(if exist):
+        name of additional bonus#1:
+        cost of bonus#1:
+        name of additional bonus#2:
+        cost of bonus#2
         Split by ":".
      -->
-    <string name="str0">Pizza:Meat, oliva, cheese, peper:3:diameter-30cm:diameter-50cm:diameter-80cm:8:11:15:more cheese:3:spice sauce:2</string>
+       <string-array name="str">
+        <item>Pizza 1:Meat, oliva, cheese, peper:3:diameter-30cm:diameter-50cm:diameter-80cm:8:11:15:more cheese(+3$):3:spice sauce(+2$):2</item>
+        <item>Pizza 2:Meat, oliva, cheese, peper:3:diameter-30cm:diameter-50cm:diameter-80cm:8:11:15:more cheese(+3$):3:spice sauce(+2$):2</item>
+        <item>Pizza 3:Meat, oliva, cheese, peper:3:diameter-30cm:diameter-50cm:diameter-80cm:8:11:15:more cheese(+3$):3:spice sauce(+2$):2</item>
+        <item>Fri:Meat, oliva, cheese, peper:3:small:medium:big:8:11:15:cheese sauce(+3$):3:spice sauce(+2$):2</item>
+        <item>Naggets:Meat, oliva, cheese, peper:3:8 pieces:12 pieces:16 pieces:8:11:15:cheese sauce(+3$):3:spice sauce(+2$):2</item>
+    </string-array>
 </resources>

@@ -13,15 +13,18 @@
         android:orientation="horizontal">
 
         <ImageView
+            android:id="@+id/imgOrder"
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_margin="8dp"
+            android:scaleType="centerCrop"
             android:layout_weight="1"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_weight="1">
 
             <TextView
                 android:id="@+id/name"
@@ -32,19 +35,12 @@
                 android:textSize="24sp" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:text="INFO"
-                android:textSize="24sp" />
-
-            <TextView
                 android:id="@+id/info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="0 $"
-                android:textSize="24sp" />
+                android:text="info"
+                android:textSize="18sp" />
 
         </LinearLayout>
 
@@ -111,7 +107,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="COLOR"
+                android:text="VARIANTS:"
                 android:textSize="24sp"
                 android:padding="8dp" />
 
@@ -121,24 +117,24 @@
                 android:id="@+id/radioColor">
 
                 <RadioButton
-                    android:id="@+id/color1"
+                    android:id="@+id/radio1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="color1"
+                    android:text="radio1"
                     android:textSize="16sp"
                     android:onClick="onRadioClicked"/>
                 <RadioButton
-                    android:id="@+id/color2"
+                    android:id="@+id/radio2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="color2"
+                    android:text="radio2"
                     android:textSize="16sp"
                     android:onClick="onRadioClicked"/>
                 <RadioButton
-                    android:id="@+id/color3"
+                    android:id="@+id/radio3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="color3"
+                    android:text="radio3"
                     android:textSize="16sp"
                     android:onClick="onRadioClicked"/>
 
