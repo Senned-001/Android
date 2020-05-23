@@ -29,7 +29,7 @@ public class Server implements Runnable {
             /* Создаем серверный сокет, которые принимает соединения */
             serverSoket = new ServerSocket(SERVER_PORT);
             System.out.println("Start server on port: " + SERVER_PORT);
-            Main.changeStatus("Connected");
+            Main.changeStatus("Status: Connected");
 
             while(true) {
                 UserConnection user = null;

@@ -9,7 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.text.Text;
 
 public class Main extends Application{
-    private static Text status = new Text("No Connection");
+    private static Text status = new Text("Status: No Connection");
     private static TextArea textArea = new TextArea("WAITING INCOMING MESSAGES");
 
     public static void main(String[] args) {
@@ -26,6 +26,7 @@ public class Main extends Application{
         stage.setWidth(700);
         stage.setHeight(500);
         textArea.setPrefHeight(400);
+        textArea.setEditable(false);
         // установка надписи
         VBox vBox = new VBox(status, textArea);
         Scene scene = new Scene(vBox);
@@ -38,7 +39,7 @@ public class Main extends Application{
     }
 
     public static void displayUserMessage(String s){
-        textArea.setText(textArea.getText() + "\n\nNEW MESSAGE:\n" + s);
+        textArea.setText(textArea.getText() + "\n\nNEW ORDER:\n" + s);
     }
 
     public static void changeStatus(String s){
