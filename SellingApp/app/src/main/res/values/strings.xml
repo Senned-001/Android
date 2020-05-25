@@ -16,11 +16,11 @@
         cost of bonus#2
         Split by ":".
      -->
-       <string-array name="str">
-        <item>Pizza 1:Meat, oliva, cheese, peper:3:diameter-30cm:diameter-50cm:diameter-80cm:8:11:15:more cheese(+3$):3:spice sauce(+2$):2</item>
-        <item>Pizza 2:Meat, oliva, cheese, peper:3:diameter-30cm:diameter-50cm:diameter-80cm:8:11:15:more cheese(+3$):3:spice sauce(+2$):2</item>
-        <item>Pizza 3:Meat, oliva, cheese, peper:3:diameter-30cm:diameter-50cm:diameter-80cm:8:11:15:more cheese(+3$):3:spice sauce(+2$):2</item>
-        <item>Fri:Meat, oliva, cheese, peper:3:small:medium:big:8:11:15:cheese sauce(+3$):3:spice sauce(+2$):2</item>
-        <item>Naggets:Meat, oliva, cheese, peper:3:8 pieces:12 pieces:16 pieces:8:11:15:cheese sauce(+3$):3:spice sauce(+2$):2</item>
+    <string-array name="str">
+        <item>Pizza 1:Meat, oliva, cheese, peper:3:diameter-30cm:diameter-50cm:diameter-80cm:8.50:11.00:15.50:more cheese:3.49:spice sauce:2.49</item>
+        <item>Pizza 2:Meat, tomatoes, cheese, peper:3:diameter-30cm:diameter-50cm:diameter-80cm:7.99:11.50:15.00:more cheese:3.49:spice sauce:2.49</item>
+        <item>Pizza 3:Meat, onion, cheese, peper:3:diameter-30cm:diameter-50cm:diameter-80cm:9.00:12.49:16.50:more cheese:3.49:spice sauce:2.49</item>
+        <item>Fri:Fried potatoes:3:small:medium:big:3.49:8.00:12.49:cheese sauce:3.49:spice sauce:2.49</item>
+        <item>Naggets:Fried Chicken:2:8 pieces:16 pieces:5.99:10.50:cheese sauce:3.49:spice sauce:2.49</item>
     </string-array>
 </resources>

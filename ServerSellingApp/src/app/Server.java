@@ -6,7 +6,7 @@ import java.net.ServerSocket;
 public class Server implements Runnable {
     private static volatile Server instance = null;
     private final int SERVER_PORT = 6789;
-    private ServerSocket serverSoket = null;
+    private ServerSocket serverSocket = null;
 
     private Server() {
     }
@@ -26,18 +26,18 @@ public class Server implements Runnable {
     public void run() {
 
         try {
-            /* Создаем серверный сокет, которые принимает соединения */
-            serverSoket = new ServerSocket(SERVER_PORT);
+            /* Create serverSocket */
+            serverSocket = new ServerSocket(SERVER_PORT);
             System.out.println("Start server on port: " + SERVER_PORT);
             Main.changeStatus("Status: Connected");
 
             while(true) {
                 UserConnection user = null;
                 try {
-                    /* ждем нового соединения  */
-                    user = new UserConnection(serverSoket.accept());
+                    /* wait new connection  */
+                    user = new UserConnection(serverSocket.accept());
                     System.out.println("Get client connection");
-                    /* создается новый поток, в котором обрабатывается соединение */
+                    /* for every connection - create new thread */
                     Thread t = new Thread(user);
                     t.start();
                 } catch (Exception e) {
@@ -48,10 +48,10 @@ public class Server implements Runnable {
         catch (IOException e) {
             System.out.println("Cant start server on port "+SERVER_PORT+":"+e.getMessage());
         } finally {
-            /* Закрываем соединение */
-            if (serverSoket != null) {
+            /* close serverSocket */
+            if (serverSocket != null) {
                 try {
-                    serverSoket.close();
+                    serverSocket.close();
                 } catch (IOException e) {
                 }
             }

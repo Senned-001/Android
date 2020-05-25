@@ -3,31 +3,22 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 public class OrderActivity extends AppCompatActivity {
     private Product product;
     private int quantity = 1;
-    private int totalSum = 0;
+    private double totalSum = 0.00;
     private String paramSelected = "";
-    private String userName = "";
-    private String userPhone = "";
     private String orderInfo = "";
     private boolean bonus1IsChecked = false;
     private boolean bonus2IsChecked = false;
-    private String resultOfOrder = "Error: please check your internet connection and try again";
-    private int price = 0;
+    private double price = 0.00;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +42,6 @@ public class OrderActivity extends AppCompatActivity {
         setImage();
         initRadioButtons();
         initCheckBoxes();
-        setListenersOnEdits();
         displayQuantity();
         displayTotalText();
         displayTotalSum();
@@ -78,8 +68,8 @@ public class OrderActivity extends AppCompatActivity {
     private void initCheckBoxes(){
         CheckBox checkBox1 = findViewById(R.id.checkbox1);
         CheckBox checkBox2 = findViewById(R.id.checkbox2);
-        checkBox1.setText(product.getBonus1Name());
-        checkBox2.setText(product.getBonus2Name());
+        checkBox1.setText(product.getBonus1Name() + "(" + product.getBonus1Price() + "$)");
+        checkBox2.setText(product.getBonus2Name() + "(" + product.getBonus2Price() + "$)");
     }
 
     public void changeQuantity(View view){
@@ -141,12 +131,11 @@ public class OrderActivity extends AppCompatActivity {
 
     private void displayTotalText(){
         TextView totalText = (TextView) findViewById(R.id.totalText);
-        String text = "Your order: " + product.getName() + " - " + quantity + " p." + ", " + paramSelected;
+        String text = product.getName() + " x" + quantity + ", " + paramSelected;
         if(bonus1IsChecked)
             text+= ", " + product.getBonus1Name();
         if(bonus2IsChecked)
             text+= ", " + product.getBonus2Name();
-        text+= "\nYour info: " + userName + ", " + userPhone;
         totalText.setText(text);
         orderInfo = text;
     }
@@ -158,87 +147,12 @@ public class OrderActivity extends AppCompatActivity {
         if(bonus2IsChecked)
             totalSum+= product.getBonus2Price()*quantity;
         TextView totalSumText = (TextView) findViewById(R.id.totalSum);
-        totalSumText.setText(totalSum +" $");
+        totalSumText.setText(BasketActivity.doubleToString(totalSum));
     }
 
-    public void orderClick(View view){
-        if(userName.isEmpty()||userPhone.isEmpty()||userPhone.matches("\\D")){
-            displayToast("Please enter correct Name and Phone");
-            return;
-        }
-        view.setEnabled(false);
-
-        Date date = new Date();
-        SimpleDateFormat fr = new SimpleDateFormat("dd.MM.YYYY HH:mm");
-        String time = fr.format(date);
-        orderInfo+="\nDate: " + time;
-        orderInfo+="\nTotal Sum: " + totalSum;
-        orderInfo = orderInfo.replaceAll("Your", "User");
-
-        final ClientConnection newClientConnection = new ClientConnection();
-        /* Open new connection in new thread */
-        Thread connectionTread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    newClientConnection.openConnection();
-                    newClientConnection.sendData(orderInfo.getBytes());
-                    newClientConnection.closeConnection();
-                    resultOfOrder = "Success Order, our manager will contact to you";
-                } catch (Exception e) {
-                }
-            }
-        });
-        connectionTread.start();
-
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-        }
-        displayToast(resultOfOrder);
-        if(!resultOfOrder.contains("Error"))
-            finish();
-        view.setEnabled(true);
-    }
-
-    private void displayToast(String message){
-        Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
-        toast.show();
-    }
-
-    private void setListenersOnEdits(){
-        EditText userNameText = (EditText) findViewById(R.id.userName);
-        userNameText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                userName = s.toString();
-                displayTotalText();
-            }
-        });
-
-        EditText userNamePhone = (EditText) findViewById(R.id.userPhone);
-        userNamePhone.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                userPhone = s.toString();
-                displayTotalText();
-            }
-        });
+    public void onAddClick(View view){
+        MainActivity.getOrders().add(new Order(product.getImageID(),orderInfo, totalSum));
+        Toast.makeText(this, "Your order was added in basket", Toast.LENGTH_LONG).show();
+        finish();
     }
 }

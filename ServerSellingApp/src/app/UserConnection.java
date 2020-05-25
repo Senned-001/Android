@@ -14,27 +14,25 @@ public class UserConnection implements Runnable {
 
     @Override
     public void run() {
-        /* получаем входной поток */
+        /* give connection */
         try {
             inputStream = clientSocket.getInputStream();
         } catch (IOException e) {
             System.out.println("Cant get input stream");
         }
-        /* создаем буфер для данных */
+        /* create buffer for data */
         byte[] buffer = new byte[1024*4];
         while(true) {
             try {
-                /*
-                 * получаем очередную порцию данных
-                 * в переменной count хранится реальное количество байт, которое получили                  */
+                /*       receive data                                   */
                 int count = inputStream.read(buffer,0,buffer.length);
-                /* проверяем, какое количество байт к нам прийшло */
+                /* if dataSize > 0 */
                 if (count > 0) {
                     String userMessage = new String(buffer,0,count);
                     System.out.println(userMessage);
                     Main.displayUserMessage(userMessage);
                 } else
-                    /* если мы получили -1, значит прервался наш поток с данными  */
+                    /* if dataSize = -1,  then connection is close  */
                     if (count == -1 ) {
                         System.out.println("close socket");
                         clientSocket.close();

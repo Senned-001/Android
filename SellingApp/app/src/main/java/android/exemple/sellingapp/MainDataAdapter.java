@@ -1,30 +1,27 @@
 package android.exemple.sellingapp;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
-class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
+class MainDataAdapter extends RecyclerView.Adapter<MainDataAdapter.ViewHolder> {
     private LayoutInflater inflater;
     private List<Product> products;
 
-    DataAdapter(Context context, List<Product> phones) {
-        this.products = phones;
+    MainDataAdapter(Context context, List<Product> products) {
+        this.products = products;
         this.inflater = LayoutInflater.from(context);
     }
 
     @Override
-    public DataAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MainDataAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View view = inflater.inflate(R.layout.product_item, parent, false);
         return new ViewHolder(view);
