@@ -9,11 +9,50 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Введите имя"/>
-    <EditText
-        android:id="@+id/year"
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Введите год рождения"/>
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/day"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="день рождения"
+            android:layout_weight="1"/>
+        <EditText
+            android:id="@+id/month"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="месяц рождения"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/year"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="год рождения"
+            android:layout_weight="1"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" или "
+            />
+        <EditText
+            android:id="@+id/age"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="возраст"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
