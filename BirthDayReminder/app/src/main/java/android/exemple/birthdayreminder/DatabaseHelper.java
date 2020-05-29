@@ -13,7 +13,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_NAME = "name";
     public static final String COLUMN_DAY = "day";
     public static final String COLUMN_MONTH = "month";
-    public static final String COLUMN_YEAR = "year";
     public static final String COLUMN_AGE = "age";
 
     public DatabaseHelper(Context context) {
@@ -26,11 +25,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE " + TABLE + " (" + COLUMN_ID
                 + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_NAME
                 + " TEXT NOT NULL, " + COLUMN_DAY + " INTEGER NOT NULL, " + COLUMN_MONTH + " INTEGER NOT NULL, "
-                + COLUMN_YEAR + " INTEGER, " + COLUMN_AGE + " INTEGER);");
+                + COLUMN_AGE + " INTEGER);");
         // добавление начальных данных
         db.execSQL("INSERT INTO "+ TABLE +" (" + COLUMN_NAME
-                + ", " + COLUMN_DAY  + ", " + COLUMN_MONTH + ", " + COLUMN_YEAR
-                + ") VALUES ('Том Смит', 22, 2, 1981);");
+                + ", " + COLUMN_DAY  + ", " + COLUMN_MONTH + ") VALUES ('Том Смит', 22, 2, 1981);");
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion,  int newVersion) {

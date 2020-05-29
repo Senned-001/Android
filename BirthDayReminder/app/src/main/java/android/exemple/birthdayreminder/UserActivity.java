@@ -1,15 +1,20 @@
 package android.exemple.birthdayreminder;
 
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class UserActivity extends AppCompatActivity {
     EditText nameBox;
@@ -19,6 +24,12 @@ public class UserActivity extends AppCompatActivity {
     EditText ageBox;
     Button delButton;
     Button saveButton;
+    TextView orText;
+    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("d.M.yyyy");
+    private static Calendar currentDate = new GregorianCalendar();
+    static{
+        DATE_FORMAT.setLenient(false);
+    }
 
     private DatabaseAdapter adapter;
     long userId=0;
@@ -34,6 +45,7 @@ public class UserActivity extends AppCompatActivity {
         ageBox = (EditText) findViewById(R.id.age);
         delButton = (Button) findViewById(R.id.deleteButton);
         saveButton = (Button) findViewById(R.id.saveButton);
+        orText = (TextView) findViewById(R.id.or);
 
         adapter = new DatabaseAdapter(this);
 
@@ -41,18 +53,20 @@ public class UserActivity extends AppCompatActivity {
         if (extras != null) {
             userId = extras.getLong("id");
         }
-        // если 0, то добавление
+        //если не 0 то редактирование
         if (userId > 0) {
+            yearBox.setVisibility(View.INVISIBLE);
+            orText.setVisibility(View.INVISIBLE);
             // получаем элемент по id из бд
             adapter.open();
             User user = adapter.getUser(userId);
             nameBox.setText(user.getName());
             dayBox.setText(String.valueOf(user.getDay()));
             monthBox.setText(String.valueOf(user.getMonth()));
-            yearBox.setText(String.valueOf(user.getYear()));
             ageBox.setText(String.valueOf(user.getAge()));
             adapter.close();
-        } else {
+
+        } else {// если 0, то добавление
             // скрываем кнопку удаления
             delButton.setVisibility(View.GONE);
         }
@@ -60,11 +74,24 @@ public class UserActivity extends AppCompatActivity {
 
     public void save(View view){
         String name = nameBox.getText().toString();
-        int day = Integer.parseInt(dayBox.getText().toString());
-        int month = Integer.parseInt(monthBox.getText().toString());
-        int year = Integer.parseInt(yearBox.getText().toString());
-        int age = Integer.parseInt(ageBox.getText().toString());
-        User user = new User(userId, name, day, month);
+        if(name.isEmpty()){
+            Toast.makeText(this, "Введите корректное имя", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        int day = 0;
+        int month = 0;
+        int age = 0;
+        try {
+            day = Integer.parseInt(dayBox.getText().toString());
+            month = Integer.parseInt(monthBox.getText().toString());
+            age = Integer.parseInt(ageBox.getText().toString());
+            DATE_FORMAT.parse(day+"."+month+"."+currentDate.get(Calendar.YEAR));
+        } catch (Exception e) {
+            Toast.makeText(this, "Введите корректную дату", Toast.LENGTH_LONG).show();
+            return;
+        }
+        User user = new User(userId, name, day, month, age);
 
         adapter.open();
         if (userId > 0) {
@@ -75,6 +102,7 @@ public class UserActivity extends AppCompatActivity {
         adapter.close();
         goHome();
     }
+
     public void delete(View view){
         adapter.open();
         adapter.delete(userId);
@@ -82,9 +110,6 @@ public class UserActivity extends AppCompatActivity {
         goHome();
     }
     private void goHome(){
-        // переход к главной activity
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        startActivity(intent);
+        finish();
     }
 }

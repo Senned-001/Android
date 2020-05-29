@@ -3,7 +3,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@drawable/background">
     <EditText
         android:id="@+id/name"
         android:layout_width="match_parent"
@@ -41,6 +42,7 @@
             android:hint="год рождения"
             android:layout_weight="1"/>
         <TextView
+            android:id="@+id/or"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=" или "

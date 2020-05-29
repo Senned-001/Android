@@ -29,13 +29,9 @@ public class UserAdapter extends ArrayAdapter<User> {
         ((TextView) convertView.findViewById(R.id.text1))
                 .setText(user.getName());
         ((TextView) convertView.findViewById(R.id.text2))
-                .setText("" + user.getDay());
+                .setText(user.getDay()+"." +user.getMonth());
         ((TextView) convertView.findViewById(R.id.text3))
-                .setText("" +user.getMonth());
-        ((TextView) convertView.findViewById(R.id.text4))
-                .setText("" +user.getYear());
-        ((TextView) convertView.findViewById(R.id.text5))
-                .setText("" +user.getAge());
+                .setText(user.getAge()!=0?"" +user.getAge():"?");
 
         return convertView;
     }

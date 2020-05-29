@@ -5,16 +5,14 @@ public class User {
     private String name;
     private int day;
     private int month;
-    private int year;
     private int age;
 
-    public User(long id, String name, int day, int month) {
+    public User(long id, String name, int day, int month, int age) {
         this.id = id;
         this.name = name;
         this.day = day;
         this.month = month;
-        this.year = 0;
-        this.age = 0;
+        this.age = age;
     }
 
     public long getId() {
@@ -31,10 +29,6 @@ public class User {
 
     public int getMonth() {
         return month;
-    }
-
-    public int getYear() {
-        return year;
     }
 
     public int getAge() {
