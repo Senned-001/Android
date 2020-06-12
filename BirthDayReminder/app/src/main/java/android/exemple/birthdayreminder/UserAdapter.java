@@ -13,9 +13,11 @@ import androidx.annotation.Nullable;
 import java.util.List;
 
 public class UserAdapter extends ArrayAdapter<User> {
+    private String[] monthsNames;
 
     public UserAdapter(@NonNull Context context, int resource, @NonNull List<User> objects) {
         super(context, resource, objects);
+        monthsNames = context.getResources().getStringArray(R.array.month_names);
     }
 
     @NonNull
@@ -29,7 +31,7 @@ public class UserAdapter extends ArrayAdapter<User> {
         ((TextView) convertView.findViewById(R.id.text1))
                 .setText(user.getName());
         ((TextView) convertView.findViewById(R.id.text2))
-                .setText(user.getDay()+"." +user.getMonth());
+                .setText(user.getDay()+" " + monthsNames[user.getMonth()-1]);
         ((TextView) convertView.findViewById(R.id.text3))
                 .setText(user.getAge()!=0?"" +user.getAge():"?");
 

@@ -9,7 +9,7 @@
         android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Введите имя"/>
+        android:hint="@string/name_area"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,13 +20,13 @@
             android:id="@+id/day"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="день рождения"
+            android:hint="@string/day_area"
             android:layout_weight="1"/>
         <EditText
             android:id="@+id/month"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="месяц рождения"
+            android:hint="@string/month_area"
             android:layout_weight="1"/>
     </LinearLayout>
 
@@ -39,19 +39,19 @@
             android:id="@+id/year"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="год рождения"
+            android:hint="@string/year_area"
             android:layout_weight="1"/>
         <TextView
             android:id="@+id/or"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" или "
+            android:text="@string/or"
             />
         <EditText
             android:id="@+id/age"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="возраст"
+            android:hint="@string/age_area"
             android:layout_weight="1"/>
     </LinearLayout>
 
@@ -65,14 +65,14 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Сохранить"
+            android:text="@string/save_button"
             android:onClick="save"/>
         <Button
             android:id="@+id/deleteButton"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Удалить"
+            android:text="@string/del_button"
             android:onClick="delete"/>
     </LinearLayout>
 </LinearLayout>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="month_names">
+        <item>Января</item>
+        <item>Февраля</item>
+        <item>Марта</item>
+        <item>Апреля</item>
+        <item>Мая</item>
+        <item>Июня</item>
+        <item>Июля</item>
+        <item>Августа</item>
+        <item>Сентября</item>
+        <item>Октября</item>
+        <item>Ноября</item>
+        <item>Декабря</item>
+    </string-array>
+    <string name="app_name">BirthDayReminder</string>
+    <string name="nearestBD">Ближайшие Дни Рождения:</string>
+    <string name="add_button">Добавить</string>
+    <string name="save_button">Сохранить</string>
+    <string name="del_button">Удалить</string>
+    <string name="name_area">Введите Имя</string>
+    <string name="day_area">День</string>
+    <string name="month_area">Месяц</string>
+    <string name="year_area">Год</string>
+    <string name="age_area">Возраст</string>
+    <string name="or">" или "</string>
+    <string name="show_all_menu">Показать все</string>
+    <string name="exit_menu">Выход</string>
+</resources>

@@ -1,3 +1,29 @@
 <resources>
     <string name="app_name">BirthDayReminder</string>
+    <string-array name="month_names">
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>Avril</item>
+        <item>May</item>
+        <item>June</item>
+        <item>Jule</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+    </string-array>
+    <string name="nearestBD">Nearest Birth Days:</string>
+    <string name="add_button">Add</string>
+    <string name="save_button">Save</string>
+    <string name="del_button">Delete</string>
+    <string name="name_area">Enter name</string>
+    <string name="day_area">Day</string>
+    <string name="month_area">Month</string>
+    <string name="year_area">Year</string>
+    <string name="age_area">Age</string>
+    <string name="or">" or "</string>
+    <string name="show_all_menu">Show all</string>
+    <string name="exit_menu">Exit</string>
 </resources>
