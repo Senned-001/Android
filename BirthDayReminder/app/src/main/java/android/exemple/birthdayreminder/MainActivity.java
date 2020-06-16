@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
             listView.setAdapter(arrayAdapter);
         }
         adapter.close();
+
     }
 
     public void add(View view){

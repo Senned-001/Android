@@ -19,7 +19,7 @@ public class DatabaseAdapter {
     private SQLiteDatabase database;
 
     private static SimpleDateFormat df = new SimpleDateFormat("d.M.yyyy");
-    private static Calendar currentDate = new GregorianCalendar();
+    public static Calendar currentDate = new GregorianCalendar();
 
     public DatabaseAdapter(Context context){
         dbHelper = new DatabaseHelper(context.getApplicationContext());
@@ -82,21 +82,26 @@ public class DatabaseAdapter {
             return null;
         List<User> result = new ArrayList<>();
 
-        for(int n=0;n<numberOfUsers;n++) {
+        for(int n = 0; n < numberOfUsers; n++) {
             User user = users.get(0);
-            long min = Long.MAX_VALUE;
+            long minDate = Long.MAX_VALUE;
 
             for (int i = 0; i < users.size(); i++) {
-                Date dateFromBase = null;
+                Calendar dateFromBase = new GregorianCalendar();
+                //get date from base with current year
                 try {
-                    dateFromBase = df.parse(users.get(i).getDay() + "." + users.get(i).getMonth() + "." + currentDate.get(Calendar.YEAR));
+                    dateFromBase.setTime(df.parse(users.get(i).getDay() + "." + users.get(i).getMonth() + "." + currentDate.get(Calendar.YEAR)));
                 } catch (ParseException e) {
                     return null;
                 }
-                long s = dateFromBase.getTime() - currentDate.getTime().getTime();
+                //if date is gone in this year - set next year
+                if(dateFromBase.getTime().getTime() < currentDate.getTime().getTime())
+                    dateFromBase.add(Calendar.YEAR,1);
+                //find user with min(nearest) date
+                long s = dateFromBase.getTime().getTime() - currentDate.getTime().getTime();
                 if (s > 0) {
-                    if (s < min) {
-                        min = s;
+                    if (s < minDate) {
+                        minDate = s;
                         user = users.get(i);
                     }
                 }
@@ -105,6 +110,17 @@ public class DatabaseAdapter {
             users.remove(user);
         }
         return result;
+    }
+
+    private String setAnnonce(){
+        List<User> users = getUsers();
+        String messageForAnnonce = null;
+        Calendar tomorrow = Calendar.getInstance();
+        tomorrow.add(Calendar.DAY_OF_MONTH,1);
+        for(User user:users){
+
+        }
+        return messageForAnnonce;
     }
 
     public long insert(User user){
