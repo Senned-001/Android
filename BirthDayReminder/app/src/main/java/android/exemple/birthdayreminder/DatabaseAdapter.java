@@ -12,7 +12,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DatabaseAdapter {
     private DatabaseHelper dbHelper;
@@ -62,6 +64,89 @@ public class DatabaseAdapter {
         return DatabaseUtils.queryNumEntries(database, DatabaseHelper.TABLE);
     }
 
+    public List<User> getNearestDateUsers(List<User> users, int numberOfUsers){
+        if(users.isEmpty())
+            return null;
+        List<User> result = new ArrayList<>();
+
+        for(int n = 0; n < numberOfUsers; n++) {
+            User user = users.get(0);
+            long minDate = Long.MAX_VALUE;
+
+            for (int i = 0; i < users.size(); i++) {
+                //get date with current year
+                Calendar dateFromBase = getDateBDWithCurYear(users.get(i));
+                if(dateFromBase!=null) {
+                    //if date is gone in this year - set next year
+                    if(dateFromBase.getTime().getTime() < currentDate.getTime().getTime())
+                        dateFromBase.add(Calendar.YEAR,1);
+                    //find user with min(nearest) date
+                    long s = dateFromBase.getTime().getTime() - currentDate.getTime().getTime();
+                    if (s > 0) {
+                        if (s < minDate) {
+                            minDate = s;
+                            user = users.get(i);
+                        }
+                    }
+                }
+            }
+            result.add(user);
+            users.remove(user);
+        }
+        return result;
+    }
+
+    public  Map<String, String> getAnnonce(){
+        List<User> users = getUsers();
+        List<User> usersWithBDtoday = new ArrayList<>();
+        List<User> usersWithBDtomorrow = new ArrayList<>();
+
+        Calendar tomorrow = Calendar.getInstance();
+        tomorrow.add(Calendar.DAY_OF_MONTH,1);
+
+        for (int i = 0; i < users.size(); i++) {
+            //get date with current year
+            Calendar dateFromBase = getDateBDWithCurYear(users.get(i));
+            if(dateFromBase!=null) {
+                if (dateFromBase.get(Calendar.DAY_OF_YEAR) == currentDate.get(Calendar.DAY_OF_YEAR))
+                    usersWithBDtoday.add(users.get(i));
+                if (dateFromBase.get(Calendar.DAY_OF_YEAR) == tomorrow.get(Calendar.DAY_OF_YEAR))
+                    usersWithBDtomorrow.add(users.get(i));
+            }
+        }
+
+        String mesForAnnonceToday = "";
+        if(!usersWithBDtoday.isEmpty()) {
+            mesForAnnonceToday += usersWithBDtoday.get(0).getName() + " - " + (usersWithBDtoday.get(0).getAge() + 1) + " years";
+            for (int i = 1; i<usersWithBDtoday.size(); i++) {
+                mesForAnnonceToday += ", " + usersWithBDtoday.get(i).getName() + " - " + (usersWithBDtoday.get(i).getAge() + 1) + " years";
+            }
+        }
+        String mesForAnnonceTomorrow = "";
+        if(!usersWithBDtomorrow.isEmpty())
+            mesForAnnonceTomorrow += usersWithBDtomorrow.get(0).getName() + " - " + (usersWithBDtomorrow.get(0).getAge() + 1) + " years";
+        for (int i = 1; i<usersWithBDtomorrow.size(); i++) {
+            mesForAnnonceTomorrow += ", " + usersWithBDtomorrow.get(i).getName() + " - " + (usersWithBDtomorrow.get(i).getAge() + 1) + " years";
+        }
+        if(mesForAnnonceToday==""&&mesForAnnonceTomorrow=="")
+            return null;
+        Map<String, String> messageForAnnonce = new HashMap<>();
+        messageForAnnonce.put("today",mesForAnnonceToday);
+        messageForAnnonce.put("tomorrow",mesForAnnonceTomorrow);
+        return messageForAnnonce;
+    }
+
+    private Calendar getDateBDWithCurYear(User user){
+        Calendar dateFromBase = new GregorianCalendar();
+        try {
+            dateFromBase.setTime(df.parse(user.getDay() + "." + user.getMonth() + "." + currentDate.get(Calendar.YEAR)));
+        } catch (ParseException e) {
+            return null;
+        }
+        return dateFromBase;
+    }
+
+    //CRUD operations
     public User getUser(long id){
         User user = null;
         String query = String.format("SELECT * FROM %s WHERE %s=?",DatabaseHelper.TABLE, DatabaseHelper.COLUMN_ID);
@@ -75,52 +160,6 @@ public class DatabaseAdapter {
         }
         cursor.close();
         return  user;
-    }
-
-    public List<User> getNearestDateUsers(List<User> users, int numberOfUsers){
-        if(users.isEmpty())
-            return null;
-        List<User> result = new ArrayList<>();
-
-        for(int n = 0; n < numberOfUsers; n++) {
-            User user = users.get(0);
-            long minDate = Long.MAX_VALUE;
-
-            for (int i = 0; i < users.size(); i++) {
-                Calendar dateFromBase = new GregorianCalendar();
-                //get date from base with current year
-                try {
-                    dateFromBase.setTime(df.parse(users.get(i).getDay() + "." + users.get(i).getMonth() + "." + currentDate.get(Calendar.YEAR)));
-                } catch (ParseException e) {
-                    return null;
-                }
-                //if date is gone in this year - set next year
-                if(dateFromBase.getTime().getTime() < currentDate.getTime().getTime())
-                    dateFromBase.add(Calendar.YEAR,1);
-                //find user with min(nearest) date
-                long s = dateFromBase.getTime().getTime() - currentDate.getTime().getTime();
-                if (s > 0) {
-                    if (s < minDate) {
-                        minDate = s;
-                        user = users.get(i);
-                    }
-                }
-            }
-            result.add(user);
-            users.remove(user);
-        }
-        return result;
-    }
-
-    private String setAnnonce(){
-        List<User> users = getUsers();
-        String messageForAnnonce = null;
-        Calendar tomorrow = Calendar.getInstance();
-        tomorrow.add(Calendar.DAY_OF_MONTH,1);
-        for(User user:users){
-
-        }
-        return messageForAnnonce;
     }
 
     public long insert(User user){

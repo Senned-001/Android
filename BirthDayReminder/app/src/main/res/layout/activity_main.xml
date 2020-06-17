@@ -17,12 +17,12 @@
         android:layout_height="wrap_content"
         android:text="Вы еще никого не добавили"
         android:textSize="12sp"
-        android:padding="20dp"
+        android:padding="40dp"
         android:gravity="center_horizontal"/>
     <ListView
         android:id="@+id/list_main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:divider="@null" />
     <Button
         android:layout_width="match_parent"
@@ -32,10 +32,31 @@
         android:textSize="18dp"
         android:layout_gravity="end"/>
     <TextView
-        android:id="@+id/annonce"
+        android:id="@+id/annonceTodayTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="12sp"
+        android:textSize="22sp"
+        android:gravity="center_horizontal"
+        />
+    <TextView
+        android:id="@+id/annonceToday"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:padding="20dp"
+        android:gravity="center_horizontal"/>
+    <TextView
+        android:id="@+id/annonceTomorrowTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="21sp"
+        android:gravity="center_horizontal"
+        />
+    <TextView
+        android:id="@+id/annonceTomorrow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
         android:padding="20dp"
         android:gravity="center_horizontal"/>
 </LinearLayout>

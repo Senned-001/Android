@@ -16,6 +16,7 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,19 +24,69 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        //open adapter for work with DB
         DatabaseAdapter adapter = new DatabaseAdapter(this);
         adapter.open();
+
+        //Output 3 nearest BD from base
+        displayListofNearestBD(adapter);
+
+        //Output BD today or tomorrow if exist
+        displayTodayOrTomorrowBD(adapter);
+
+        adapter.close();
+    }
+
+    private void displayListofNearestBD (DatabaseAdapter adapter){
         List<User> nearestUsers = adapter.getNearestDateUsers(adapter.getUsers(),3);
         if(nearestUsers!=null) {
+            //hide notification on mainActivity
             TextView note1 = (TextView) findViewById(R.id.notification1);
             note1.setPadding(0,0,0,0);
             note1.setVisibility(View.INVISIBLE);
+
             ArrayAdapter<User> arrayAdapter = new UserAdapter(this, R.layout.list_layout, nearestUsers);
             ListView listView = (ListView) findViewById(R.id.list_main);
             listView.setAdapter(arrayAdapter);
         }
-        adapter.close();
+    }
 
+    private void displayTodayOrTomorrowBD(DatabaseAdapter adapter) {
+        Map<String, String> annonceText = adapter.getAnnonce();
+        TextView annonceTodayTitle = (TextView) findViewById(R.id.annonceTodayTitle);
+        TextView annonceToday = (TextView) findViewById(R.id.annonceToday);
+        TextView annonceTomorrowTitle = (TextView) findViewById(R.id.annonceTomorrowTitle);
+        TextView annonceTomorrow = (TextView) findViewById(R.id.annonceTomorrow);
+        if(annonceText!=null) {
+            if (annonceText.containsKey("today")) {
+                annonceTodayTitle.setText("Today celebrate their Birthdays:");
+                annonceToday.setText(annonceText.get("today"));
+            } else {
+                annonceTodayTitle.setText("");
+                annonceTodayTitle.setVisibility(View.INVISIBLE);
+                annonceToday.setVisibility(View.INVISIBLE);
+            }
+            if (annonceText.containsKey("tomorrow")) {
+                annonceTomorrowTitle.setText("Tomorrow celebrate their Birthdays:");
+                annonceTomorrow.setText(annonceText.get("tomorrow"));
+            } else {
+                annonceTomorrowTitle.setText("");
+                annonceTomorrowTitle.setVisibility(View.INVISIBLE);
+                annonceTomorrow.setVisibility(View.INVISIBLE);
+            }
+        }
+        else{
+            annonceTodayTitle.setVisibility(View.INVISIBLE);
+            annonceToday.setVisibility(View.INVISIBLE);
+            annonceTomorrowTitle.setVisibility(View.INVISIBLE);
+            annonceTomorrow.setVisibility(View.INVISIBLE);
+        }
     }
 
     public void add(View view){
@@ -43,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    //Create menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
