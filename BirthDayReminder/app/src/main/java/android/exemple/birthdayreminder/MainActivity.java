@@ -2,6 +2,9 @@ package android.exemple.birthdayreminder;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -15,6 +18,7 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -41,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
         displayTodayOrTomorrowBD(adapter);
 
         adapter.close();
+
+        setAlarm();
     }
 
     private void displayListofNearestBD (DatabaseAdapter adapter){
@@ -92,6 +98,16 @@ public class MainActivity extends AppCompatActivity {
     public void add(View view){
         Intent intent = new Intent(this, UserActivity.class);
         startActivity(intent);
+    }
+
+    private void setAlarm(){
+        AlarmManager alarmMgr = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, MyAlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+        Calendar time = Calendar.getInstance();
+        time.setTimeInMillis(System.currentTimeMillis());
+        time.add(Calendar.SECOND, 30);
+        alarmMgr.set(AlarmManager.RTC_WAKEUP, time.getTimeInMillis(), pendingIntent);
     }
 
     //Create menu
