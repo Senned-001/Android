@@ -74,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
                 annonceTodayTitle.setText("Today celebrate their Birthdays:");
                 annonceToday.setText(annonceText.get("today"));
             } else {
-                annonceTodayTitle.setText("");
                 annonceTodayTitle.setVisibility(View.INVISIBLE);
                 annonceToday.setVisibility(View.INVISIBLE);
             }
@@ -82,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
                 annonceTomorrowTitle.setText("Tomorrow celebrate their Birthdays:");
                 annonceTomorrow.setText(annonceText.get("tomorrow"));
             } else {
-                annonceTomorrowTitle.setText("");
                 annonceTomorrowTitle.setVisibility(View.INVISIBLE);
                 annonceTomorrow.setVisibility(View.INVISIBLE);
             }

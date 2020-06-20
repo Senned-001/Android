@@ -114,24 +114,28 @@ public class DatabaseAdapter {
             }
         }
 
+        Map<String, String> messageForAnnonce = new HashMap<>();
         String mesForAnnonceToday = "";
         if(!usersWithBDtoday.isEmpty()) {
             mesForAnnonceToday += usersWithBDtoday.get(0).getName() + " - " + (usersWithBDtoday.get(0).getAge() + 1) + " years";
             for (int i = 1; i<usersWithBDtoday.size(); i++) {
                 mesForAnnonceToday += ", " + usersWithBDtoday.get(i).getName() + " - " + (usersWithBDtoday.get(i).getAge() + 1) + " years";
             }
+            messageForAnnonce.put("today",mesForAnnonceToday);
         }
+
         String mesForAnnonceTomorrow = "";
-        if(!usersWithBDtomorrow.isEmpty())
+        if(!usersWithBDtomorrow.isEmpty()) {
             mesForAnnonceTomorrow += usersWithBDtomorrow.get(0).getName() + " - " + (usersWithBDtomorrow.get(0).getAge() + 1) + " years";
-        for (int i = 1; i<usersWithBDtomorrow.size(); i++) {
-            mesForAnnonceTomorrow += ", " + usersWithBDtomorrow.get(i).getName() + " - " + (usersWithBDtomorrow.get(i).getAge() + 1) + " years";
+            for (int i = 1; i < usersWithBDtomorrow.size(); i++) {
+                mesForAnnonceTomorrow += ", " + usersWithBDtomorrow.get(i).getName() + " - " + (usersWithBDtomorrow.get(i).getAge() + 1) + " years";
+            }
+            messageForAnnonce.put("tomorrow",mesForAnnonceTomorrow);
         }
+
         if(mesForAnnonceToday==""&&mesForAnnonceTomorrow=="")
             return null;
-        Map<String, String> messageForAnnonce = new HashMap<>();
-        messageForAnnonce.put("today",mesForAnnonceToday);
-        messageForAnnonce.put("tomorrow",mesForAnnonceTomorrow);
+
         return messageForAnnonce;
     }
 
