@@ -9,7 +9,8 @@
         android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/name_area"/>
+        android:hint="@string/name_area"
+        android:layout_marginTop="90dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,13 +29,6 @@
             android:layout_height="wrap_content"
             android:hint="@string/month_area"
             android:layout_weight="1"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
         <EditText
             android:id="@+id/year"
             android:layout_width="match_parent"

@@ -44,7 +44,7 @@ public class AllDataActivity extends AppCompatActivity {
         userList.setAdapter(arrayAdapter);
         adapter.close();
     }
-    // по нажатию на кнопку запускаем UserActivity для добавления данных
+    // on button start UserActivity for add data
     public void add(View view){
         Intent intent = new Intent(this, UserActivity.class);
         startActivity(intent);

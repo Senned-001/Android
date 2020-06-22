@@ -15,6 +15,7 @@
         <item>December</item>
     </string-array>
     <string name="nearestBD">Nearest Birth Days:</string>
+    <string name="nearestBDNotification">You haven\'t added anyone yet</string>
     <string name="add_button">Add</string>
     <string name="save_button">Save</string>
     <string name="del_button">Delete</string>
@@ -26,4 +27,11 @@
     <string name="or">" or "</string>
     <string name="show_all_menu">Show all</string>
     <string name="exit_menu">Exit</string>
+    <string name="today_message">Today is BD of </string>
+    <string name="tomorrow_message">Tomorrow is BD of </string>
+    <string name="today_message_full">Today is Birthday of: </string>
+    <string name="tomorrow_message_full">Tomorrow is Birthday of: </string>
+    <string name="years"> y.</string>
+    <string name="alert_name_message">Enter correct name</string>
+    <string name="alert_date_message">Enter correct date</string>
 </resources>

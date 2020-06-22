@@ -26,7 +26,7 @@ public class UserActivity extends AppCompatActivity {
     Button saveButton;
     TextView orText;
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("d.M.yyyy");
-    private static Calendar currentDate = new GregorianCalendar();
+    private static Calendar currentDate = Calendar.getInstance();
     static{
         DATE_FORMAT.setLenient(false);
     }
@@ -53,7 +53,7 @@ public class UserActivity extends AppCompatActivity {
         if (extras != null) {
             userId = extras.getLong("id");
         }
-        //если не 0 то редактирование
+        //if 0 - then edit
         if (userId > 0) {
             yearBox.setVisibility(View.INVISIBLE);
             orText.setVisibility(View.INVISIBLE);
@@ -66,8 +66,8 @@ public class UserActivity extends AppCompatActivity {
             ageBox.setText(String.valueOf(user.getAge()));
             adapter.close();
 
-        } else {// если 0, то добавление
-            // скрываем кнопку удаления
+        } else {
+            // if 0 - then hide delete button
             delButton.setVisibility(View.GONE);
         }
     }
@@ -75,7 +75,7 @@ public class UserActivity extends AppCompatActivity {
     public void save(View view){
         String name = nameBox.getText().toString();
         if(name.isEmpty()){
-            Toast.makeText(this, "Введите корректное имя", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.alert_name_message), Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -88,7 +88,7 @@ public class UserActivity extends AppCompatActivity {
             age = Integer.parseInt(ageBox.getText().toString());
             DATE_FORMAT.parse(day+"."+month+"."+currentDate.get(Calendar.YEAR));
         } catch (Exception e) {
-            Toast.makeText(this, "Введите корректную дату", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.alert_date_message), Toast.LENGTH_LONG).show();
             return;
         }
         User user = new User(userId, name, day, month, age);

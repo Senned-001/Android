@@ -33,7 +33,8 @@ public class UserAdapter extends ArrayAdapter<User> {
         ((TextView) convertView.findViewById(R.id.text2))
                 .setText(user.getDay()+" " + monthsNames[user.getMonth()-1]);
         ((TextView) convertView.findViewById(R.id.text3))
-                .setText(user.getAge()!=0?"" +user.getAge():"?");
+                .setText(user.getAge()!=0 ? "" + (user.getAge()+1) + getContext().getString(R.string.years):
+                        "?" + getContext().getString(R.string.years));
 
         return convertView;
     }

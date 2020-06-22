@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setAlarm();
     }
 
     @Override
@@ -45,8 +46,6 @@ public class MainActivity extends AppCompatActivity {
         displayTodayOrTomorrowBD(adapter);
 
         adapter.close();
-
-        setAlarm();
     }
 
     private void displayListofNearestBD (DatabaseAdapter adapter){
@@ -71,14 +70,14 @@ public class MainActivity extends AppCompatActivity {
         TextView annonceTomorrow = (TextView) findViewById(R.id.annonceTomorrow);
         if(annonceText!=null) {
             if (annonceText.containsKey("today")) {
-                annonceTodayTitle.setText("Today celebrate their Birthdays:");
+                annonceTodayTitle.setText(getString(R.string.today_message_full));
                 annonceToday.setText(annonceText.get("today"));
             } else {
                 annonceTodayTitle.setVisibility(View.INVISIBLE);
                 annonceToday.setVisibility(View.INVISIBLE);
             }
             if (annonceText.containsKey("tomorrow")) {
-                annonceTomorrowTitle.setText("Tomorrow celebrate their Birthdays:");
+                annonceTomorrowTitle.setText(getString(R.string.tomorrow_message_full));
                 annonceTomorrow.setText(annonceText.get("tomorrow"));
             } else {
                 annonceTomorrowTitle.setVisibility(View.INVISIBLE);
@@ -102,10 +101,17 @@ public class MainActivity extends AppCompatActivity {
         AlarmManager alarmMgr = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, MyAlarmReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
-        Calendar time = Calendar.getInstance();
-        time.setTimeInMillis(System.currentTimeMillis());
-        time.add(Calendar.SECOND, 30);
-        alarmMgr.set(AlarmManager.RTC_WAKEUP, time.getTimeInMillis(), pendingIntent);
+        Calendar calendar = Calendar.getInstance();
+        Calendar cal = Calendar.getInstance();
+
+        calendar.set(Calendar.YEAR, cal.get(Calendar.YEAR));
+        calendar.set(Calendar.MONTH, cal.get(Calendar.MONTH));
+        calendar.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH));
+        calendar.set(Calendar.HOUR_OF_DAY, 9);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
     }
 
     //Create menu
@@ -113,8 +119,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
 
-        menu.add(0,1,0,"Посмотреть всех");
-        menu.add(0,2,1,"Выход");
+        menu.add(0,1,0, getString(R.string.show_all_menu));
+        menu.add(0,2,1,getString(R.string.exit_menu));
         return true;
     }
 

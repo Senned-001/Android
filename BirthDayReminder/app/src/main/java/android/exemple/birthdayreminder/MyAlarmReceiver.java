@@ -44,16 +44,16 @@ public class MyAlarmReceiver extends BroadcastReceiver {
              if (annonceText != null) {
                  String message = "";
                  if (annonceText.containsKey("today")) {
-                     message += "Today is BD of " + annonceText.get("today") + "\n";
+                     message += context.getString(R.string.today_message) + annonceText.get("today") + "\n";
                  }
                  if (annonceText.containsKey("tomorrow")) {
-                     message += "Tomorrow is BD of " + annonceText.get("tomorrow") + "\n";
+                     message += context.getString(R.string.tomorrow_message) + annonceText.get("tomorrow") + "\n";
                  }
                  adapter.close();
 
                  createNotification(message);
 
-                 Log.d("Info", message);
+                 //Log.d("Info", message);
              }
          }
 
@@ -63,34 +63,31 @@ public class MyAlarmReceiver extends BroadcastReceiver {
              PendingIntent resultPendingIntent = PendingIntent.getActivity(context, 0, resultIntent,
                      PendingIntent.FLAG_UPDATE_CURRENT);
 
-             //for sound
-             Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-
-             //for vibrate
-             long[] pattern = {500,500,500,500,500,500,500,500,500};
-
              NotificationCompat.Builder builder =
                      new NotificationCompat.Builder(context, CHANNEL_ID)
                              .setSmallIcon(R.drawable.logo_small)
                              .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.logo))
-                             .setContentTitle("BirthDayReminder")
+                             .setContentTitle(context.getString(R.string.app_name))
                              .setContentText(message)
+                             .setTicker(message)
                              .setContentIntent(resultPendingIntent)
                              .setAutoCancel(true)
-                             .setDefaults(Notification.DEFAULT_SOUND)
-                             .setVibrate(pattern);
-
+                             .setDefaults(Notification.DEFAULT_VIBRATE | Notification.DEFAULT_SOUND | Notification.FLAG_SHOW_LIGHTS)
+                             .setPriority(NotificationCompat.PRIORITY_HIGH);
 
              NotificationManager notificationManager =
                      (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
 
              if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                 CharSequence name = "notification";
+                 CharSequence name = "BDReminder_notification";
                  String description = "Notification_chanel";
-                 int importance = NotificationManager.IMPORTANCE_DEFAULT;
                  NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name,
-                         importance);
+                         NotificationManager.IMPORTANCE_HIGH);
                  channel.setDescription(description);
+                 channel.enableLights(true);
+                 channel.enableVibration(true);
+                 channel.setShowBadge(true);
+
                  // Register the channel with the system; you can't change the importance
                  // or other notification behaviours after this
                  notificationManager =

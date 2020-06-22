@@ -8,9 +8,10 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Добавить"
+        android:text="@string/add_button"
         android:onClick="add"
-        android:textSize="18dp"/>
+        android:textSize="18dp"
+        android:layout_marginTop="90dp"/>
     <ListView
         android:id="@+id/list_allData"
         android:layout_width="match_parent"

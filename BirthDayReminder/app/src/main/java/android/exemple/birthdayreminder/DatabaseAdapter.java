@@ -13,17 +13,19 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class DatabaseAdapter {
     private DatabaseHelper dbHelper;
     private SQLiteDatabase database;
-
-    private static SimpleDateFormat df = new SimpleDateFormat("d.M.yyyy");
-    public static Calendar currentDate = new GregorianCalendar();
+    private Context context;
+    private static SimpleDateFormat df = new SimpleDateFormat("d.M.yyyy", Locale.getDefault());
+    private static Calendar currentDate = Calendar.getInstance();
 
     public DatabaseAdapter(Context context){
         dbHelper = new DatabaseHelper(context.getApplicationContext());
+        this.context = context;
     }
 
     public DatabaseAdapter open(){
@@ -95,6 +97,7 @@ public class DatabaseAdapter {
         return result;
     }
 
+    //get Strings for announce on mainActivity and Notifications
     public  Map<String, String> getAnnonce(){
         List<User> users = getUsers();
         List<User> usersWithBDtoday = new ArrayList<>();
@@ -117,18 +120,18 @@ public class DatabaseAdapter {
         Map<String, String> messageForAnnonce = new HashMap<>();
         String mesForAnnonceToday = "";
         if(!usersWithBDtoday.isEmpty()) {
-            mesForAnnonceToday += usersWithBDtoday.get(0).getName() + " - " + (usersWithBDtoday.get(0).getAge() + 1) + " years";
+            mesForAnnonceToday += usersWithBDtoday.get(0).getName() + " - " + (usersWithBDtoday.get(0).getAge() + 1) + context.getString(R.string.years);
             for (int i = 1; i<usersWithBDtoday.size(); i++) {
-                mesForAnnonceToday += ", " + usersWithBDtoday.get(i).getName() + " - " + (usersWithBDtoday.get(i).getAge() + 1) + " years";
+                mesForAnnonceToday += ", " + usersWithBDtoday.get(i).getName() + " - " + (usersWithBDtoday.get(i).getAge() + 1) + context.getString(R.string.years);
             }
             messageForAnnonce.put("today",mesForAnnonceToday);
         }
 
         String mesForAnnonceTomorrow = "";
         if(!usersWithBDtomorrow.isEmpty()) {
-            mesForAnnonceTomorrow += usersWithBDtomorrow.get(0).getName() + " - " + (usersWithBDtomorrow.get(0).getAge() + 1) + " years";
+            mesForAnnonceTomorrow += usersWithBDtomorrow.get(0).getName() + " - " + (usersWithBDtomorrow.get(0).getAge() + 1) + context.getString(R.string.years);
             for (int i = 1; i < usersWithBDtomorrow.size(); i++) {
-                mesForAnnonceTomorrow += ", " + usersWithBDtomorrow.get(i).getName() + " - " + (usersWithBDtomorrow.get(i).getAge() + 1) + " years";
+                mesForAnnonceTomorrow += ", " + usersWithBDtomorrow.get(i).getName() + " - " + (usersWithBDtomorrow.get(i).getAge() + 1) + context.getString(R.string.years);
             }
             messageForAnnonce.put("tomorrow",mesForAnnonceTomorrow);
         }

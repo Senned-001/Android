@@ -27,4 +27,12 @@
     <string name="or">" или "</string>
     <string name="show_all_menu">Показать все</string>
     <string name="exit_menu">Выход</string>
+    <string name="nearestBDNotification">Вы еще никого не добавили</string>
+    <string name="today_message">"Сегодня ДР у "</string>
+    <string name="tomorrow_message">"Завтра ДР у "</string>
+    <string name="today_message_full">"Сегодня празднуют День Рождения: "</string>
+    <string name="tomorrow_message_full">"Завтра празднуют День Рождения: "</string>
+    <string name="years">" л."</string>
+    <string name="alert_name_message">Введите корректное имя</string>
+    <string name="alert_date_message">Введите корректную дату</string>
 </resources>
