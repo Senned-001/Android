@@ -102,11 +102,8 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MyAlarmReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
         Calendar calendar = Calendar.getInstance();
-        Calendar cal = Calendar.getInstance();
 
-        calendar.set(Calendar.YEAR, cal.get(Calendar.YEAR));
-        calendar.set(Calendar.MONTH, cal.get(Calendar.MONTH));
-        calendar.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH));
+        calendar.add(Calendar.DAY_OF_YEAR,1);
         calendar.set(Calendar.HOUR_OF_DAY, 9);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
