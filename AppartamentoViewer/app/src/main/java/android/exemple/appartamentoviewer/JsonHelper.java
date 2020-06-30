@@ -11,7 +11,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class JsonHelper {
-    public static String urlCountries = "https://api.beta.kvartirka.pro/client/1.4/country";
+    public static String urlRequestCountries = "https://api.beta.kvartirka.pro/client/1.4/country";
+    private static String DefaultCountryName = "Россия";
+    private static String DefaultCityName = "Москва";
 
     public static JSONObject getJSONObjectFromURL(String urlString) {
         HttpURLConnection urlConnection = null;
@@ -23,8 +25,8 @@ public class JsonHelper {
             urlConnection.setRequestProperty("X-Device-ID", "test");
             urlConnection.setRequestProperty("X-Device-OS", "test");
             urlConnection.setRequestProperty("X-ApplicationVersion", "test");
-            urlConnection.setReadTimeout(10000 /* milliseconds */ );
-            urlConnection.setConnectTimeout(15000 /* milliseconds */ );
+            urlConnection.setReadTimeout(10000);
+            urlConnection.setConnectTimeout(15000);
             urlConnection.setDoOutput(true);
             urlConnection.connect();
 
@@ -38,7 +40,7 @@ public class JsonHelper {
             br.close();
 
             String jsonString = sb.toString();
-            System.out.println("JSON: " + jsonString);
+            //System.out.println("JSON: " + jsonString);
 
             return new JSONObject(jsonString);
         } catch (IOException e) {
@@ -49,8 +51,41 @@ public class JsonHelper {
         return null;
     }
 
-    public void getJSONData (JSONObject jsonObject){
-        JSONArray citiesFrom = jsonObject.getJSONArray("countries ");
+    public JSONObject getJSONDataForCountryAndCity (JSONObject jsonObject, String country, String city){
+        JSONObject countryData = null;
+        JSONObject cityData = null;
+        //search of country
+        try {
+            JSONArray countries = jsonObject.getJSONArray("countries");
+            JSONObject countryDefault = null;
+            for (int i=0; i<countries.length();i++){
+                if(countries.getJSONObject(i).getString("name")==country)
+                    countryData = countries.getJSONObject(i);
+                if(countries.getJSONObject(i).getString("name")==DefaultCountryName)
+                    countryDefault = countries.getJSONObject(i);
+            }
+            //if country was not found - take default country
+            if(countryData==null)
+                countryData = countryDefault;
 
+            //search of city
+            JSONArray cities = countryData.getJSONArray("cities");
+            JSONObject cityDefault = null;
+            for (int i=0; i<cities.length();i++){
+                if(cities.getJSONObject(i).getString("name")==city)
+                    cityData = countries.getJSONObject(i);
+                if(cities.getJSONObject(i).getString("name")==DefaultCityName)
+                    cityDefault = countries.getJSONObject(i);
+            }
+            //if city was not found - take default city
+            if(cityData==null)
+                cityData = cityDefault;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return cityData;
     }
+
+
 }
