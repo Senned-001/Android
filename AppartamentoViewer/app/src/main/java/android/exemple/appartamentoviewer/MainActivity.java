@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import org.json.JSONObject;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -13,7 +15,8 @@ public class MainActivity extends AppCompatActivity {
         Thread newThread = new Thread(){
             @Override
             public void run() {
-                JsonHelper.getJSONObjectFromURL(JsonHelper.urlCountries);
+                JSONObject js = JsonHelper.getJSONDataForCountryAndCity(JsonHelper.getJSONObjectFromURL(JsonHelper.urlRequestCountries), "Россия", "Ростов");
+                JsonHelper.getJSONDataForCityId(js);
             }
         };
         newThread.start();

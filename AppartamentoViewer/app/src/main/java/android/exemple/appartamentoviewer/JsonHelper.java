@@ -9,16 +9,18 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
 public class JsonHelper {
-    public static String urlRequestCountries = "https://api.beta.kvartirka.pro/client/1.4/country";
+    private static String versionAPI = "1.4";
+    public static String urlRequestCountries = "https://api.beta.kvartirka.pro/client/" + versionAPI + "/country";
     private static String DefaultCountryName = "Россия";
     private static String DefaultCityName = "Москва";
+    public static String urlRequestFlatsFromCity = "http://api.kvartirka.com/client/" + versionAPI + "/flats/?offset=0&device_screen_width=1920&currency_id=643&city_id=";
 
-    public static JSONObject getJSONObjectFromURL(String urlString) {
+    //GET request
+    public static JSONObject getJSONObjectFromURL(String URLRequest) {
         HttpURLConnection urlConnection = null;
         try {
-            URL url = new URL(urlString);
+            URL url = new URL(URLRequest);
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
             urlConnection.setRequestProperty("X-Client-ID", "test");
@@ -40,7 +42,7 @@ public class JsonHelper {
             br.close();
 
             String jsonString = sb.toString();
-            //System.out.println("JSON: " + jsonString);
+            System.out.println("JSON: " + jsonString);
 
             return new JSONObject(jsonString);
         } catch (IOException e) {
@@ -51,7 +53,7 @@ public class JsonHelper {
         return null;
     }
 
-    public JSONObject getJSONDataForCountryAndCity (JSONObject jsonObject, String country, String city){
+    public static JSONObject getJSONDataForCountryAndCity (JSONObject jsonObject, String country, String city){
         JSONObject countryData = null;
         JSONObject cityData = null;
         //search of country
@@ -59,23 +61,25 @@ public class JsonHelper {
             JSONArray countries = jsonObject.getJSONArray("countries");
             JSONObject countryDefault = null;
             for (int i=0; i<countries.length();i++){
-                if(countries.getJSONObject(i).getString("name")==country)
+                if(countries.getJSONObject(i).getString("name").equals(country))
                     countryData = countries.getJSONObject(i);
-                if(countries.getJSONObject(i).getString("name")==DefaultCountryName)
+                if(countries.getJSONObject(i).getString("name").equals(DefaultCountryName))
                     countryDefault = countries.getJSONObject(i);
             }
             //if country was not found - take default country
             if(countryData==null)
                 countryData = countryDefault;
+            System.out.println("JSON countryData: "+ countryData.toString());
 
             //search of city
             JSONArray cities = countryData.getJSONArray("cities");
             JSONObject cityDefault = null;
             for (int i=0; i<cities.length();i++){
-                if(cities.getJSONObject(i).getString("name")==city)
-                    cityData = countries.getJSONObject(i);
-                if(cities.getJSONObject(i).getString("name")==DefaultCityName)
-                    cityDefault = countries.getJSONObject(i);
+                if(cities.getJSONObject(i).getString("name").equals(city))
+                    cityData = cities.getJSONObject(i);
+                if(cities.getJSONObject(i).getString("name").equals(DefaultCityName))
+                    cityDefault = cities.getJSONObject(i);
+
             }
             //if city was not found - take default city
             if(cityData==null)
@@ -84,8 +88,28 @@ public class JsonHelper {
             e.printStackTrace();
         }
 
+        //System.out.println("JSON citydata: " + cityData.toString());
+        //return JSONObect with data of one city
         return cityData;
     }
 
+    public static JSONArray getJSONDataForCityId(JSONObject cityData){
+        String cityID = null;
+        try {
+            cityID = cityData.getString("id");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JSONObject flatData = getJSONObjectFromURL(urlRequestFlatsFromCity+cityID);
+        try {
+            JSONArray flatArray = flatData.getJSONArray("flats");
+            //System.out.println(flatArray);
 
+            //return JSON Array with flats from one city
+            return flatArray;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
