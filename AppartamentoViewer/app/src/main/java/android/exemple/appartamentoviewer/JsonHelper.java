@@ -12,8 +12,8 @@ import java.net.URL;
 public class JsonHelper {
     private static String versionAPI = "1.4";
     public static String urlRequestCountries = "https://api.beta.kvartirka.pro/client/" + versionAPI + "/country";
-    private static String DefaultCountryName = "Россия";
-    private static String DefaultCityName = "Москва";
+    private static String defaultCountryName = "Россия";
+    private static String defaultCityName = "Москва";
     public static String urlRequestFlatsFromCity = "http://api.kvartirka.com/client/" + versionAPI + "/flats/?offset=0&device_screen_width=1920&currency_id=643&city_id=";
 
     //GET request
@@ -54,6 +54,11 @@ public class JsonHelper {
     }
 
     public static JSONObject getJSONDataForCountryAndCity (JSONObject jsonObject, String country, String city){
+        if(country==null)
+            country= defaultCountryName;
+        if(city==null)
+            country=defaultCityName;
+
         JSONObject countryData = null;
         JSONObject cityData = null;
         //search of country
@@ -63,7 +68,7 @@ public class JsonHelper {
             for (int i=0; i<countries.length();i++){
                 if(countries.getJSONObject(i).getString("name").equals(country))
                     countryData = countries.getJSONObject(i);
-                if(countries.getJSONObject(i).getString("name").equals(DefaultCountryName))
+                if(countries.getJSONObject(i).getString("name").equals(defaultCountryName))
                     countryDefault = countries.getJSONObject(i);
             }
             //if country was not found - take default country
@@ -77,7 +82,7 @@ public class JsonHelper {
             for (int i=0; i<cities.length();i++){
                 if(cities.getJSONObject(i).getString("name").equals(city))
                     cityData = cities.getJSONObject(i);
-                if(cities.getJSONObject(i).getString("name").equals(DefaultCityName))
+                if(cities.getJSONObject(i).getString("name").equals(defaultCityName))
                     cityDefault = cities.getJSONObject(i);
 
             }
