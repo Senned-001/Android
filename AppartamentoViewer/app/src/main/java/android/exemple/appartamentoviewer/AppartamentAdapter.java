@@ -25,25 +25,27 @@ public class AppartamentAdapter extends RecyclerView.Adapter<AppartamentAdapter.
     @Override
     public AppartamentAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View view = inflater.inflate(R.layout.product_item, parent, false);
+        View view = inflater.inflate(R.layout.appartament_adapter, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Product product = appartaments.get(position);
-        holder.imageView.setImageResource(product.getImageID());
-        holder.nameView.setText(product.getName());
-        holder.firstPrice.setText("from " + product.getParamPrices()[0] + "$");
-        final Product prod = product;
+        Appartament appartament = appartaments.get(position);
+        //holder.imageView.setImageResource(appartament.getImageID());
+        holder.nameView.setText(appartament.getTitle());
+        holder.priceView.setText(appartament.getCoast()+"$");
+        holder.mainInfoView.setText(appartament.getInfo());
+        final Appartament app = appartament;
+/*
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intentOrder = new Intent(inflater.getContext(), OrderActivity.class);
-                intentOrder.putExtra("Product", prod);
+                intentOrder.putExtra("Product", app);
                 inflater.getContext().startActivity(intentOrder);
             }
-        });
+        });*/
     }
 
     @Override
@@ -53,13 +55,14 @@ public class AppartamentAdapter extends RecyclerView.Adapter<AppartamentAdapter.
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         final ImageView imageView;
-        final TextView nameView, firstPrice;
+        final TextView nameView, priceView, mainInfoView;
 
         ViewHolder(View view){
             super(view);
-            imageView = (ImageView)view.findViewById(R.id.product_image);
-            nameView = (TextView) view.findViewById(R.id.product_name);
-            firstPrice = (TextView) view.findViewById(R.id.product_price);
+            imageView = (ImageView)view.findViewById(R.id.adapter_mainphoto);
+            nameView = (TextView) view.findViewById(R.id.adapter_title);
+            priceView = (TextView) view.findViewById(R.id.adapter_cost);
+            mainInfoView = (TextView) view.findViewById(R.id.adapter_info);
         }
     }
 }

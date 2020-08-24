@@ -1,5 +1,7 @@
 package android.exemple.appartamentoviewer;
 
+import java.util.Arrays;
+
 public class Appartament {
     private int id;                 //id
     private String title;           //title
@@ -120,5 +122,24 @@ public class Appartament {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "Appartament{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", coast=" + coast +
+                ", numberOfRooms=" + numberOfRooms +
+                ", address='" + address + '\'' +
+                ", info='" + info + '\'' +
+                ", mainPhoto='" + mainPhoto + '\'' +
+                ", photos=" + Arrays.toString(photos) +
+                ", phone='" + phone + '\'' +
+                ", name='" + name + '\'' +
+                ", coordinate1='" + coordinate1 + '\'' +
+                ", coordinate2='" + coordinate2 + '\'' +
+                ", description='" + description + '\'' +
+                '}';
     }
 }
